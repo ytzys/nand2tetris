@@ -1,0 +1,62 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/02/ALU.hdl
+
+/**
+ * The ALU (Arithmetic Logic Unit).
+ * Computes one of the following functions:
+ * x+y, x-y, y-x, 0, 1, -1, x, y, -x, -y, !x, !y,
+ * x+1, y+1, x-1, y-1, x&y, x|y on two 16-bit inputs, 
+ * according to 6 input bits denoted zx,nx,zy,ny,f,no.
+ * In addition, the ALU computes two 1-bit outputs:
+ * if the ALU output == 0, zr is set to 1; otherwise zr is set to 0;
+ * if the ALU output < 0, ng is set to 1; otherwise ng is set to 0.
+ */
+
+// Implementation: the ALU logic manipulates the x and y inputs
+// and operates on the resulting values, as follows:
+// if (zx == 1) set x = 0        // 16-bit constant
+// if (nx == 1) set x = !x       // bitwise not
+// if (zy == 1) set y = 0        // 16-bit constant
+// if (ny == 1) set y = !y       // bitwise not
+// if (f == 1)  set out = x + y  // integer 2's complement addition
+// if (f == 0)  set out = x & y  // bitwise and
+// if (no == 1) set out = !out   // bitwise not
+// if (out == 0) set zr = 1
+// if (out < 0) set ng = 1
+
+CHIP ALU {
+    IN  
+        x[16], y[16],  // 16-bit inputs        
+        zx, // zero the x input?
+        nx, // negate the x input?
+        zy, // zero the y input?
+        ny, // negate the y input?
+        f,  // compute out = x + y (if 1) or x & y (if 0)
+        no; // negate the out output?
+
+    OUT 
+        out[16], // 16-bit output
+        zr, // 1 if (out == 0), 0 otherwise
+        ng; // 1 if (out < 0),  0 otherwise
+
+    PARTS:
+   // Put you code here:
+	Not(in=zx, out=notzx);	
+	And16(a=x, b[0]=notzx, b[1]=notzx, b[2]=notzx, b[3]=notzx, b[4]=notzx, b[5]=notzx, b[6]=notzx, b[7]=notzx, b[8]=notzx, b[9]=notzx, b[10]=notzx, b[11]=notzx, b[12]=notzx, b[13]=notzx, b[14]=notzx, b[15]=notzx, out=zxx);
+	NoOrNot(in=zxx, sel=nx, out=nxx);
+
+	Not(in=zy, out=notzy);	
+	And16(a=y, b[0]=notzy, b[1]=notzy, b[2]=notzy, b[3]=notzy, b[4]=notzy, b[5]=notzy, b[6]=notzy, b[7]=notzy, b[8]=notzy, b[9]=notzy, b[10]=notzy, b[11]=notzy, b[12]=notzy, b[13]=notzy, b[14]=notzy, b[15]=notzy, out=zyy);
+	NoOrNot(in=zyy, sel=ny, out=nyy);
+
+	Add16(a=nxx, b=nyy, out=addxy);
+	And16(a=nxx, b=nyy, out=andxy);
+	Mux16(a=andxy, b=addxy, sel=f, out=fxy);
+
+	NoOrNot(in=fxy, sel=no, out[15]=ng, out=outtmp, out=out);	
+
+	Or16Way(in=outtmp, out=or16way);
+	Not(in=or16way, out=zr);
+}

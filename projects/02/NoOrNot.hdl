@@ -1,0 +1,20 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/02/NoOrNot.hdl
+
+/**
+ * 16-bit NoOrNot:
+ *	if sel == 1 then out=!in
+ *  	else out=in
+ */
+
+CHIP NoOrNot {
+    IN in[16], sel;
+    OUT out[16];
+
+    PARTS:
+   // Put you code here:
+	Not16(in=in, out=not16out);
+	Mux16(a=in, b= not16out, sel=sel, out=out);
+}

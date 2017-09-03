@@ -1,0 +1,150 @@
+/**
+** Snake的循环链表实现，相对链表来说实现简单，但缺点是没法动态扩展
+**/
+
+class Snake {
+
+	// 由几个Square组成
+	field int squareCount;
+	field int squareSize; // 每一个Square的size
+	
+	field int x;
+	field int y;
+	
+	// 前进方向
+	field int direction;
+	
+	// 由Square组成的Array
+	field Array squareArray;
+	
+	field int head;
+	field int tail;
+	
+	constructor Snake new(int nx, int ny, int nsquareCount, int nsquareSize) {
+		var int i;
+	
+		let x = nx;
+		let y= ny;
+		let squareCount = nsquareCount;
+		let squareSize = nsquareSize;
+		let head = 0;
+		let tail = squareCount - 1;
+		
+		let squareArray = Array.new(squareCount);
+		let i = 0;
+		
+
+		while(i < squareCount) {
+			let squareArray[i] = Square.new(x + (squareCount -1 - i) * squareSize, y, squareSize);
+			let i = i + 1;
+		}
+		
+		return this;
+	}
+	
+	method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+	
+
+    method void moveUp() {
+		var Square headSquare;
+		var Square tailSquare;
+		
+		let headSquare = squareArray[head];
+		let tailSquare = squareArray[tail];
+		do tailSquare.erase();
+		do tailSquare.setX(headSquare.getX());
+		if (headSquare.getY() > (squareSize - 1)) {
+			do tailSquare.setY(headSquare.getY() - squareSize);
+		} else {
+			// 注意虽然y的值最多可以取252，那么square的下边界就是255，
+			// 但是这就需要调用系统函数drawRectangle(0, 252, 4, 256)，此时256就找不到了
+			// 所以只能放弃几行，让y从252 - 4 开始
+			do tailSquare.setY(252 - squareSize);
+		}
+		do tailSquare.draw();
+		do caculateHead();
+		do caculateTail();
+        return;
+    }
+
+
+    method void moveDown() {
+		var Square headSquare;
+		var Square tailSquare;
+		
+		let headSquare = squareArray[head];
+		let tailSquare = squareArray[tail];
+		do tailSquare.erase();
+		do tailSquare.setX(headSquare.getX());
+		if ((headSquare.getY() + (2 * squareSize)) < 256) { 
+			do tailSquare.setY(headSquare.getY() + squareSize);
+		} else {
+			do tailSquare.setY(0);
+		}
+		do tailSquare.draw();
+		do caculateHead();
+		do caculateTail();
+        return;
+    }
+
+
+    method void moveLeft() {
+        var Square headSquare;
+		var Square tailSquare;
+		
+		let headSquare = squareArray[head];
+		let tailSquare = squareArray[tail];
+		do tailSquare.erase();
+		if (headSquare.getX() > (squareSize - 1)) {
+			do tailSquare.setX(headSquare.getX() - squareSize);
+		} else {
+			do tailSquare.setX(508 - squareSize);
+		}
+		do tailSquare.setY(headSquare.getY());
+		do tailSquare.draw();
+		do caculateHead();
+		do caculateTail();
+        return;
+    }
+
+
+    method void moveRight() {
+		var Square headSquare;
+		var Square tailSquare;
+		
+		let headSquare = squareArray[head];
+		let tailSquare = squareArray[tail];
+		do tailSquare.erase();
+		if ((headSquare.getX() + (2 * squareSize))  < 512) {			
+			do tailSquare.setX(headSquare.getX() + squareSize);			
+		} else {
+			do tailSquare.setX(0);
+		}
+		do tailSquare.setY(headSquare.getY());
+		do tailSquare.draw();
+		do caculateHead();
+		do caculateTail();
+        return;
+    }
+	
+	method void caculateHead() {
+		if (head > 0) {
+			let head = head - 1;
+		} else {
+			let head = squareCount - 1;
+		}
+		return;
+	}
+	
+	method void caculateTail() {
+		if (tail > 0) {
+			let tail = tail - 1;
+		} else {
+			let tail = squareCount - 1;
+		}
+		return;
+	}
+}

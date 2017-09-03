@@ -1,0 +1,344 @@
+function Snake.new 1
+push constant 8
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 2
+push argument 1
+pop this 3
+push argument 2
+pop this 0
+push argument 3
+pop this 1
+push constant 0
+pop this 6
+push this 0
+push constant 1
+sub
+pop this 7
+push this 0
+call Array.new 1
+pop this 5
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push this 0
+lt
+not
+if-goto WHILE_END0
+push local 0
+push this 5
+add
+push this 2
+push this 0
+push constant 1
+sub
+push local 0
+sub
+add
+push this 1
+call Math.multiply 2
+push this 3
+push this 1
+call Square.new 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push pointer 0
+return
+function Snake.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Snake.moveUp 2
+push argument 0
+pop pointer 0
+push this 6
+push this 5
+add
+pop pointer 1
+push that 0
+pop local 0
+push this 7
+push this 5
+add
+pop pointer 1
+push that 0
+pop local 1
+push local 1
+call Square.erase 1
+pop temp 0
+push local 1
+push local 0
+call Square.getX 1
+call Square.setX 2
+pop temp 0
+push local 0
+call Square.getY 1
+push this 1
+push constant 1
+sub
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 1
+push local 0
+call Square.getY 1
+push this 1
+sub
+call Square.setY 2
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push local 1
+push constant 252
+push this 1
+sub
+call Square.setY 2
+pop temp 0
+label IF_END0
+push local 1
+call Square.draw 1
+pop temp 0
+push pointer 0
+call Snake.caculateHead 1
+pop temp 0
+push pointer 0
+call Snake.caculateTail 1
+pop temp 0
+push constant 0
+return
+function Snake.moveDown 2
+push argument 0
+pop pointer 0
+push this 6
+push this 5
+add
+pop pointer 1
+push that 0
+pop local 0
+push this 7
+push this 5
+add
+pop pointer 1
+push that 0
+pop local 1
+push local 1
+call Square.erase 1
+pop temp 0
+push local 1
+push local 0
+call Square.getX 1
+call Square.setX 2
+pop temp 0
+push local 0
+call Square.getY 1
+push constant 2
+push this 1
+call Math.multiply 2
+add
+push constant 256
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 1
+push local 0
+call Square.getY 1
+push this 1
+add
+call Square.setY 2
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push local 1
+push constant 0
+call Square.setY 2
+pop temp 0
+label IF_END0
+push local 1
+call Square.draw 1
+pop temp 0
+push pointer 0
+call Snake.caculateHead 1
+pop temp 0
+push pointer 0
+call Snake.caculateTail 1
+pop temp 0
+push constant 0
+return
+function Snake.moveLeft 2
+push argument 0
+pop pointer 0
+push this 6
+push this 5
+add
+pop pointer 1
+push that 0
+pop local 0
+push this 7
+push this 5
+add
+pop pointer 1
+push that 0
+pop local 1
+push local 1
+call Square.erase 1
+pop temp 0
+push local 0
+call Square.getX 1
+push this 1
+push constant 1
+sub
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 1
+push local 0
+call Square.getX 1
+push this 1
+sub
+call Square.setX 2
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push local 1
+push constant 508
+push this 1
+sub
+call Square.setX 2
+pop temp 0
+label IF_END0
+push local 1
+push local 0
+call Square.getY 1
+call Square.setY 2
+pop temp 0
+push local 1
+call Square.draw 1
+pop temp 0
+push pointer 0
+call Snake.caculateHead 1
+pop temp 0
+push pointer 0
+call Snake.caculateTail 1
+pop temp 0
+push constant 0
+return
+function Snake.moveRight 2
+push argument 0
+pop pointer 0
+push this 6
+push this 5
+add
+pop pointer 1
+push that 0
+pop local 0
+push this 7
+push this 5
+add
+pop pointer 1
+push that 0
+pop local 1
+push local 1
+call Square.erase 1
+pop temp 0
+push local 0
+call Square.getX 1
+push constant 2
+push this 1
+call Math.multiply 2
+add
+push constant 512
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 1
+push local 0
+call Square.getX 1
+push this 1
+add
+call Square.setX 2
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push local 1
+push constant 0
+call Square.setX 2
+pop temp 0
+label IF_END0
+push local 1
+push local 0
+call Square.getY 1
+call Square.setY 2
+pop temp 0
+push local 1
+call Square.draw 1
+pop temp 0
+push pointer 0
+call Snake.caculateHead 1
+pop temp 0
+push pointer 0
+call Snake.caculateTail 1
+pop temp 0
+push constant 0
+return
+function Snake.caculateHead 0
+push argument 0
+pop pointer 0
+push this 6
+push constant 0
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 6
+push constant 1
+sub
+pop this 6
+goto IF_END0
+label IF_FALSE0
+push this 0
+push constant 1
+sub
+pop this 6
+label IF_END0
+push constant 0
+return
+function Snake.caculateTail 0
+push argument 0
+pop pointer 0
+push this 7
+push constant 0
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 7
+push constant 1
+sub
+pop this 7
+goto IF_END0
+label IF_FALSE0
+push this 0
+push constant 1
+sub
+pop this 7
+label IF_END0
+push constant 0
+return

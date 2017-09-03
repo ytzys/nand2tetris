@@ -1,0 +1,87 @@
+/**
+ * Implements the Snake game.
+ */
+class SnakeGame {
+
+    // The Snake
+    field Snake snake;
+
+    // The snake's movement direction
+    field int direction; // 0=none,1=up,2=down,3=left,4=right
+
+    /** Constructs a new SnakeGame Game. */
+    constructor SnakeGame new() {
+        let snake = Snake.new(0, 0, 38, 4);
+        let direction = 0;
+
+        return this;
+    }
+
+    /** Deallocates the object's memory. */
+    method void dispose() {
+        do snake.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Starts the game. Handles inputs from the user that control
+     *  the snake's movement, direction and size. */
+    method void run() {
+        var char key;
+        var boolean exit;
+
+        let exit = false;
+
+        while (~exit) {
+            // waits for a key to be pressed.
+            while (key = 0) {
+                let key = Keyboard.keyPressed();
+                do moveSnake();
+            }
+
+            if (key = 81) {
+                let exit = true;
+            }
+            
+            if (key = 131) {
+                let direction = 1;
+            }
+            if (key = 133) {
+                let direction = 2;
+            }
+            if (key = 130) {
+                let direction = 3;
+            }
+            if (key = 132) {
+                let direction = 4;
+            }
+
+            // waits for the key to be released.
+            while (~(key = 0)) {
+                let key = Keyboard.keyPressed();
+                do moveSnake();
+            }
+        }
+            
+        return;
+	}
+
+    /** Moves the snake by 2 pixels in the current direction. */
+    method void moveSnake() {
+        if (direction = 1) {
+            do snake.moveUp();
+        }
+        if (direction = 2) {
+            do snake.moveDown();
+        }
+        if (direction = 3) {
+            do snake.moveLeft();
+        }
+        if (direction = 4) {
+            do snake.moveRight();
+        }
+
+        do Sys.wait(10); // Delays the next movement.
+        return;
+    }
+}

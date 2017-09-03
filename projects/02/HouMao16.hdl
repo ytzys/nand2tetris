@@ -1,0 +1,18 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/02/HouMao16.hdl
+
+/**
+ * 16-bit HouMao16:
+ *  	out[i]=in
+ */
+
+CHIP Inc16 {
+    IN in;
+    OUT out[16];
+
+    PARTS:
+   // Put you code here:
+	
+}
