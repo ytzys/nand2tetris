@@ -1,4 +1,4 @@
 # nand2tetris
-¼ÆËã»ú×é³ÉÒªËØ-´ÓÁã¿ªÊ¼¹¹½¨ÏÖ´ú¼ÆËã»ú ÏîÄ¿
+è®¡ç®—æœºç³»ç»Ÿè¦ç´ -ä»é›¶å¼€å§‹æ„å»ºç°ä»£è®¡ç®—æœº é¡¹ç›®
 
-![·âÃæ](https://github.com/ytzys/nand2tetris/blob/master/1.jpg)
+![å°é¢](https://github.com/ytzys/nand2tetris/blob/master/1.jpg)
