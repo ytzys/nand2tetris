@@ -27,6 +27,12 @@ class JackTokenizer(object):
 			if self.tokenIndexPerLine < self.tokencountPerLine:
 				self.advance = self.tokensPerLine[self.tokenIndexPerLine]
 				self.tokenIndexPerLine = self.tokenIndexPerLine + 1
+				if self.advance == "\"":
+					self.advance = ""
+					while self.tokensPerLine[self.tokenIndexPerLine] != "\"":
+						self.advance = self.advance + " " + self.tokensPerLine[self.tokenIndexPerLine]
+						self.tokenIndexPerLine = self.tokenIndexPerLine + 1
+				self.tokenIndexPerLine = self.tokenIndexPerLine + 1
 				return True
 			else:
 				if self.hasMoreLines():
