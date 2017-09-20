@@ -8,15 +8,33 @@ def main():
 	if os.path.isfile(args[0]):
 		jacktokenizer = JackTokenizer(args[0])
 	while jacktokenizer.hasMoreTokens():
-		if jacktokenizer.tokenType() == "KEYWORD":
+		# Involve tokenType() only once, or string constants will not work, i.e. :
+		#
+		# if jacktokenizer.tokenType() == "KEYWORD":
+		# 	jacktokenizer.keyword()
+		# elif jacktokenizer.tokenType() == "SYMBOL":
+		# 	jacktokenizer.symbol()
+		# elif jacktokenizer.tokenType() == "INT_CONST":
+		# 	jacktokenizer.intVal()
+		# elif jacktokenizer.tokenType() == "STRING_CONST":
+		# 	print("is string constant")
+		# 	jacktokenizer.stringVal()
+		# elif jacktokenizer.tokenType() == "IDENTIFIER":
+		# 	jacktokenizer.identifier()
+		#
+		# This will cause string constant to be identifier.
+
+		tokenType = jacktokenizer.tokenType()
+		if tokenType == "KEYWORD":
 			jacktokenizer.keyword()
-		elif jacktokenizer.tokenType() == "SYMBOL":
+		elif tokenType == "SYMBOL":
 			jacktokenizer.symbol()
-		elif jacktokenizer.tokenType() == "INT_CONST":
+		elif tokenType == "INT_CONST":
 			jacktokenizer.intVal()
-		elif jacktokenizer.tokenType() == "STRING_CONST":
+		elif tokenType == "STRING_CONST":
+			print("is string constant")
 			jacktokenizer.stringVal()
-		elif jacktokenizer.tokenType() == "IDENTIFIER":
+		elif tokenType == "IDENTIFIER":
 			jacktokenizer.identifier()
 	jacktokenizer.close()
 

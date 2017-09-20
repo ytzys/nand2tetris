@@ -27,12 +27,16 @@ class JackTokenizer(object):
 			if self.tokenIndexPerLine < self.tokencountPerLine:
 				self.advance = self.tokensPerLine[self.tokenIndexPerLine]
 				self.tokenIndexPerLine = self.tokenIndexPerLine + 1
-				if self.advance == "\"":
-					self.advance = ""
-					while self.tokensPerLine[self.tokenIndexPerLine] != "\"":
+
+				## todo: handle nesting "\"" 
+				if self.advance.startswith("\""):
+					# self.advance = self.advance[1:]
+					while not self.tokensPerLine[self.tokenIndexPerLine].endswith("\""):
 						self.advance = self.advance + " " + self.tokensPerLine[self.tokenIndexPerLine]
 						self.tokenIndexPerLine = self.tokenIndexPerLine + 1
-				self.tokenIndexPerLine = self.tokenIndexPerLine + 1
+					self.advance = self.advance + " " + self.tokensPerLine[self.tokenIndexPerLine]
+					self.tokenIndexPerLine = self.tokenIndexPerLine + 1
+					print("###" + self.advance + "###")
 				return True
 			else:
 				if self.hasMoreLines():
@@ -92,6 +96,8 @@ class JackTokenizer(object):
 			if  value >= 0 and value < 32767:
 				return "INT_CONST"
 		elif self.advance.startswith("\"") and self.advance.endswith("\""):
+			self.advance = self.advance[1:-1]
+			print("$$$" + self.advance + "$$$")
 			return "STRING_CONST"
 		elif not self.advance[0].isdigit():
 			return "IDENTIFIER"
