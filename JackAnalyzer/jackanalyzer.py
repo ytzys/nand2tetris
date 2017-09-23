@@ -1,13 +1,17 @@
 import getopt
 import sys
 import os
-from jackanalyzer.jacktokenizer import JackTokenizer
+# from jackanalyzer.jacktokenizer import JackTokenizer
+from jackanalyzer.compilationengine import CompilationEngine
 
 def main():
 	opt, args = getopt.getopt(sys.argv[1:], "h", ["help"])
 	if os.path.isfile(args[0]):
-		jacktokenizer = JackTokenizer(args[0])
-	while jacktokenizer.hasMoreTokens():
+		# jacktokenizer = JackTokenizer(args[0])
+		compilationEngine = CompilationEngine(args[0])
+		compilationEngine.compileClass()
+
+
 		# Involve tokenType() only once, or string constants will not work, i.e. :
 		#
 		# if jacktokenizer.tokenType() == "KEYWORD":
@@ -24,19 +28,21 @@ def main():
 		#
 		# This will cause string constant to be identifier.
 
-		tokenType = jacktokenizer.tokenType()
-		if tokenType == "KEYWORD":
-			jacktokenizer.keyword()
-		elif tokenType == "SYMBOL":
-			jacktokenizer.symbol()
-		elif tokenType == "INT_CONST":
-			jacktokenizer.intVal()
-		elif tokenType == "STRING_CONST":
-			print("is string constant")
-			jacktokenizer.stringVal()
-		elif tokenType == "IDENTIFIER":
-			jacktokenizer.identifier()
-	jacktokenizer.close()
+	# while jacktokenizer.hasMoreTokens():
+	# 	tokenType = jacktokenizer.tokenType()
+	# 	if tokenType == "KEYWORD":
+	# 		jacktokenizer.keyword()
+	# 	elif tokenType == "SYMBOL":
+	# 		jacktokenizer.symbol()
+	# 	elif tokenType == "INT_CONST":
+	# 		jacktokenizer.intVal()
+	# 	elif tokenType == "STRING_CONST":
+	# 		print("is string constant")
+	# 		jacktokenizer.stringVal()
+	# 	elif tokenType == "IDENTIFIER":
+	# 		jacktokenizer.identifier()
+	# jacktokenizer.close()
+
 
 if __name__ == "__main__":
 	main()
