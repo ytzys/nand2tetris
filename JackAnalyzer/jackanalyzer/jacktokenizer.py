@@ -129,6 +129,9 @@ class JackTokenizer(object):
 	def stringVal(self):
 		self.outputfile.write("<stringConstant> " + self.advance + " </stringConstant>\n")
 		return self.advance
+
+	def advance(self):
+		return self.advance
 		
 	def close(self):
 		self.f.close()

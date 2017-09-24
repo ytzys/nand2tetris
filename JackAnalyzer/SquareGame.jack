@@ -1,16 +1,18 @@
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
-// File name: projects/09/Square/SquareGame.jack
+// File name: projects/10/ExpressionlessSquare/SquareGame.jack
+
+// Expressionless version of Square.jack.
 
 /**
- * Implements the Square Dance game.
+ * The SquareDance class implements the Square Dance game.
  * In this game you can move a black square around the screen and
  * change its size during the movement.
- * In the beginning, the square is located at the top-left corner
- * of the screen. The arrow keys are used to move the square.
- * The 'z' & 'x' keys are used to decrement and increment the size.
- * The 'q' key is used to quit the game.
+ * In the beggining, the square is located at the top left corner.
+ * Use the arrow keys to move the square.
+ * Use 'z' & 'x' to decrement & increment the size.
+ * Use 'q' to quit.
  */
 class SquareGame {
 
@@ -20,84 +22,84 @@ class SquareGame {
     // The square's movement direction
     field int direction; // 0=none,1=up,2=down,3=left,4=right
 
-    /** Constructs a new Square Game. */
+    // Constructs a new Square Game.
     constructor SquareGame new() {
-        let square = Square.new(0, 0, 30);
-        let direction = 0;
+        let square = square;
+        let direction = direction;
 
-        return this;
+        return square;
     }
 
-    /** Deallocates the object's memory. */
+    // Deallocates the object's memory.
     method void dispose() {
         do square.dispose();
-        do Memory.deAlloc(this);
+        do Memory.deAlloc(square);
         return;
     }
 
-    /** Starts the game. Handles inputs from the user that control
-     *  the square's movement, direction and size. */
+    // Starts the game. Handles inputs from the user that controls
+    // the square movement direction and size.
     method void run() {
         var char key;
         var boolean exit;
 
-        let exit = false;
+        let exit = key;
 
-        while (~exit) {
+        while (exit) {
             // waits for a key to be pressed.
-            while (key = 0) {
-                let key = Keyboard.keyPressed();
+            while (key) {
+                let key = key;
                 do moveSquare();
             }
 
-            if (key = 81) {
-                let exit = true;
+            if (key) {
+                let exit = exit;
             }
-            if (key = 90) {
+            if (key) {
                 do square.decSize();
             }
-            if (key = 88) {
+            if (key) {
                 do square.incSize();
             }
-            if (key = 131) {
-                let direction = 1;
+            if (key) {
+                let direction = exit;
             }
-            if (key = 133) {
-                let direction = 2;
+            if (key) {
+                let direction = key;
             }
-            if (key = 130) {
-                let direction = 3;
+            if (key) {
+                let direction = square;
             }
-            if (key = 132) {
-                let direction = 4;
+            if (key) {
+                let direction = direction;
             }
 
             // waits for the key to be released.
-            while (~(key = 0)) {
-                let key = Keyboard.keyPressed();
+            while (key) {
+                let key = key;
                 do moveSquare();
             }
         }
             
         return;
-	}
+    }
 
-    /** Moves the square by 2 pixels in the current direction. */
+    // Moves the square by 2 in the current direction.
     method void moveSquare() {
-        if (direction = 1) {
+        if (direction) {
             do square.moveUp();
         }
-        if (direction = 2) {
+        if (direction) {
             do square.moveDown();
         }
-        if (direction = 3) {
+        if (direction) {
             do square.moveLeft();
         }
-        if (direction = 4) {
+        if (direction) {
             do square.moveRight();
         }
 
-        do Sys.wait(5); // Delays the next movement.
+        do Sys.wait(direction); // Delays the next movement.
         return;
     }
 }
