@@ -305,6 +305,11 @@ class CompilationEngine(object):
 		# 	pass
 		self.outputfile.write("<term>\n")
 		self.write(tokenType)
+		while self.jacktokenizer.hasMoreTokens() and not self.jacktokenizer.advance == "(":
+			self.write(self.jacktokenizer.tokenType())
+		self.write(self.jacktokenizer.tokenType()) # (
+		self.compileExpressionList()
+		self.write(self.jacktokenizer.tokenType()) # )
 		self.outputfile.write("</term>\n")
 
 	def compileExpressionList(self):
